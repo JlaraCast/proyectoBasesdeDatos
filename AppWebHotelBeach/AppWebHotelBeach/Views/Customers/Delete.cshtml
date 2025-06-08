@@ -1,0 +1,73 @@
+﻿@model AppWebHotelBeach.Models.Customer
+
+@{
+    ViewData["Title"] = "Eliminar Cliente";
+}
+
+<style>
+    .bg-custom {
+        background-color: #0c193b !important;
+    }
+
+    .btn-custom-outline {
+        border-color: #0c193b;
+        color: #0c193b;
+        transition: all 0.3s ease;
+    }
+
+        .btn-custom-outline:hover {
+            background-color: #0c193b;
+            color: white;
+        }
+
+    .rounded-xl {
+        border-radius: 1rem;
+    }
+
+    .card-shadow {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .text-danger-light {
+        color: #c82333;
+    }
+
+    .info-center {
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 1.2rem;
+        color: #0c193b;
+        font-weight: 600;
+        line-height: 1.6;
+    }
+
+        .info-center span.label {
+            font-weight: 700;
+            margin-right: 0.5rem;
+            color: #0c193b;
+        }
+</style>
+
+<div class="container mt-5">
+    <div class="card rounded-xl card-shadow border-0">
+        <div class="card-header bg-custom text-white rounded-top-xl text-center">
+            <h3 class="mb-0">¿Estás seguro de que deseas eliminar este cliente?</h3>
+        </div>
+        <div class="card-body px-5 py-4">
+            <h5 class="mb-4 text-danger-light text-center">Esta acción no se puede deshacer.</h5>
+
+            <div class="info-center">
+                <p><span class="label">ID:</span> @Model.CustomerId</p>
+                <p><span class="label">Nombre:</span> @Model.Name @Model.LastName</p>
+                <p><span class="label">Correo:</span> @Model.Email</p>
+            </div>
+
+            <form asp-action="Delete" method="post" class="text-center">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="CustomerId" />
+                <button type="submit" class="btn btn-danger btn-lg rounded-pill px-4 me-3">Eliminar</button>
+                <a asp-action="List" class="btn btn-custom-outline btn-lg rounded-pill px-4">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>

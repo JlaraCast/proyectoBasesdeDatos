@@ -1,0 +1,221 @@
+﻿@model AppWebHotelBeach.Models.Customer
+
+@{
+    ViewData["Title"] = "Registrarse";
+}
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #f5f7fa;
+        font-family: 'Segoe UI', sans-serif;
+        color: #0c193b;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 2rem;
+        font-size: 2rem;
+    }
+
+    .form-card {
+        background: #fff;
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+    }
+
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+        .form-group label {
+            font-weight: 600;
+        }
+
+    .form-control {
+        border-radius: 6px;
+        box-shadow: none;
+    }
+
+    .input-group .form-control {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .input-group-append .btn {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .btn-info {
+        background-color: #1e88e5;
+        border-color: #1e88e5;
+        color: white;
+    }
+
+        .btn-info:hover {
+            background-color: #1565c0;
+            border-color: #1565c0;
+        }
+
+    .btn-primary {
+        background-color: #2e7d32;
+        border-color: #2e7d32;
+        color: white;
+        display: block;
+        margin: 0 auto;
+        padding: 0.6rem 2rem;
+        font-size: 1rem;
+        border-radius: 6px;
+    }
+
+        .btn-primary:hover {
+            background-color: #1b5e20;
+            border-color: #1b5e20;
+        }
+
+    .alert-danger {
+        margin-top: 1rem;
+    }
+
+    .text-danger {
+        font-size: 0.9rem;
+    }
+
+    a {
+        color: #0c193b;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+        a:hover {
+            text-decoration: underline;
+        }
+</style>
+
+<h1>Registrarse</h1>
+
+<div class="form-card">
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (var entry in ViewData.ModelState)
+                {
+                    foreach (var error in entry.Value.Errors)
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
+                }
+            </ul>
+        </div>
+    }
+
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="CustomerId">Cédula</label>
+            <div class="input-group">
+                <input asp-for="CustomerId" class="form-control" id="cedulaInput" onblur="buscarCedula()" />
+            </div>
+            <span asp-validation-for="CustomerId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="IDType">Tipo de Cedula</label>
+            <select asp-for="IDType" class="form-control">
+                <option value="">-- Seleccione un tipo de identificación --</option>
+                <option value="physical">Fisica</option>
+                <option value="legal">Legal</option>
+            </select>
+            <span asp-validation-for="IDType" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Name">Nombre</label>
+            <input asp-for="Name" class="form-control" id="Name" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="LastName">Primer Apellido</label>
+            <input asp-for="LastName" class="form-control" id="LastName" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SecondLastName">Segundo Apellido</label>
+            <input asp-for="SecondLastName" class="form-control" id="SecondLastName" />
+            <span asp-validation-for="SecondLastName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Phone">Telefono</label>
+            <input asp-for="Phone" class="form-control" id="Phone" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Address">Direccion</label>
+            <input asp-for="Address" class="form-control" id="Address" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" id="Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Password">Contraseña</label>
+            <input asp-for="Password" type="password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-group text-center">
+            <input type="submit" value="Crear" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+<div style="text-align: center; margin-bottom: 2rem;">
+    <a asp-action="List">Volver a la lista</a>
+</div>
+
+@section Scripts {
+    <script>
+        async function buscarCedula() {
+            const cedula = document.getElementById('cedulaInput').value.trim();
+            if (!cedula || cedula.length < 9) return;
+
+            try {
+                const response = await fetch(`/Customers/BuscarPorCedula?cedula=${cedula}`);
+                if (!response.ok) throw new Error("Error en la respuesta");
+
+                const data = await response.json();
+
+                if (data) {
+                    document.getElementById("Name").value = data.name || "";
+                    document.getElementById("LastName").value = data.lastName || "";
+                    document.getElementById("SecondLastName").value = data.secondLastName || "";
+                    document.getElementById("Phone").value = data.phone || "";
+                    document.getElementById("Address").value = data.address || "";
+                    document.getElementById("Email").value = data.email || "";
+                }
+            } catch (error) {
+                console.error("Error al buscar la cédula:", error);
+            }
+        }
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<AppWebHotelBeach.Models.Reservation>
+
+@{
+    ViewData["Title"] = "Reservaciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1>Reservaciones</h1>
+
+
+<form asp-action="FilterByDate" method="get" class="mb-3">
+    <div class="input-group">
+        <input type="date" name="reservationDate" class="form-control" />
+        <button type="submit" class="btn btn-primary">Filtrar por Fecha</button>
+    </div>
+</form>
+
+
+
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-warning">@ViewBag.Message</div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Numero de reserva</th>
+            <th>Cedula</th>
+            <th>Fecha</th>
+            <th>Total ₡</th>
+            <th>Total $</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ReservationId</td>
+                <td>@item.CustomerId</td>
+                <td>@item.ReservationDate.ToString("dd/MM/yyyy")</td>
+                <td>@item.TotalColones.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                <td>@item.TotalDollars.ToString("C", new System.Globalization.CultureInfo("en-US"))</td>
+                <td class="action-buttons">
+                    <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@item.ReservationId">Detalles</a>
+                    <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.ReservationId">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

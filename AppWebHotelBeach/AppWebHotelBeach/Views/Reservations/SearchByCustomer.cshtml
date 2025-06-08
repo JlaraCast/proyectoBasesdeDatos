@@ -1,0 +1,62 @@
+﻿@model IEnumerable<WebReservation>
+
+
+@{
+    ViewData["Title"] = "Buscar Reservaciones por Cliente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h2>Buscar Reservaciones por Cliente</h2>
+
+<form asp-action="SearchByCustomer" method="post" class="mb-4">
+    <div class="form-group">
+        <label for="customerId">Cédula del Cliente:</label>
+        <input type="number" class="form-control" name="customerId" id="customerId" required />
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Buscar</button>
+</form>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-warning">@ViewBag.Message</div>
+}
+
+@if (Model != null && Model.Any())
+{
+    <h3>Reservaciones encontradas:</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.First().ReservationId)</th>
+                <th>@Html.DisplayNameFor(model => model.First().CustomerId)</th>
+                <th>@Html.DisplayNameFor(model => model.First().PackageId)</th>
+                <th>@Html.DisplayNameFor(model => model.First().ReservationDate)</th>
+                <th>@Html.DisplayNameFor(model => model.First().NumberOfPeople)</th>
+                <th>@Html.DisplayNameFor(model => model.First().NumberOfNights)</th>
+                <th>@Html.DisplayNameFor(model => model.First().PaymentMethod)</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ReservationId</td>
+                    <td>@item.CustomerId</td>
+                    <td>@item.PackageId</td>
+                    <td>@item.ReservationDate.ToShortDateString()</td>
+                    <td>@item.NumberOfPeople</td>
+                    <td>@item.NumberOfNights</td>
+                    <td>@item.PaymentMethod</td>
+                    <td>
+                        <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.ReservationId">Editar</a>
+                        <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@item.ReservationId">Detalles</a>
+                        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.ReservationId">Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

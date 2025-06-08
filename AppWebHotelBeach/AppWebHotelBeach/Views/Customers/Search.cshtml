@@ -1,0 +1,139 @@
+﻿@{
+    ViewData["Title"] = "Buscar Cliente";
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+}
+
+<style>
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #f0f4ff;
+        color: #0c193b;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    
+    main {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        width: 100%;
+    }
+
+    
+    .card-form {
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(12, 25, 59, 0.15);
+        width: 100%;
+        max-width: 400px;
+        padding: 2rem;
+        margin: 0 auto;
+    }
+
+    h1 {
+        font-weight: 700;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        color: #0c193b;
+    }
+
+    /
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    input.form-control {
+        width: 100%;
+        padding: 0.6rem 0.8rem;
+        border: 1.8px solid #0c193b;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+        input.form-control:focus {
+            border-color: #07112a;
+            outline: none;
+            box-shadow: 0 0 6px rgba(12, 25, 59, 0.3);
+        }
+
+    button.btn-primary {
+        width: 100%;
+        padding: 0.7rem;
+        font-weight: 700;
+        font-size: 1.1rem;
+        border-radius: 8px;
+        border: none;
+        background-color: #0c193b;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 1rem;
+    }
+
+        button.btn-primary:hover {
+            background-color: #07112a;
+        }
+
+    
+    .alert {
+        padding: 1rem;
+        border-radius: 10px;
+        background-color: #f8d7da;
+        color: #842029;
+        font-weight: 600;
+        margin-top: 1.5rem;
+        text-align: center;
+    }
+
+    
+    @@media (max-width: 576px) {
+        main {
+            padding: 1rem;
+        }
+
+        .card-form {
+            padding: 1.5rem;
+        }
+    }
+</style>
+
+<main>
+    <div class="card-form">
+        <h1>Buscar Cliente por Cedula</h1>
+
+        <form asp-action="SearchByID" method="post">
+            <div class="form-group">
+                <label for="customerId">Cedula del Cliente</label>
+                <input type="number" name="customerId" class="form-control" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+
+        @if (ViewBag.Mensaje != null)
+        {
+            <div class="alert">
+                @ViewBag.Mensaje
+            </div>
+        }
+    </div>
+</main>

@@ -1,0 +1,347 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+
+main {
+    margin: 0;
+    padding: 0;
+    flex: 1;
+}
+
+body {
+    
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Usa viewport height en lugar de porcentaje */
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo para el header */
+.mi-header {
+    display: flex;
+    justify-content: space-between; /* Espacio entre la izquierda y derecha */
+    align-items: center;
+    padding: 10px;
+    background-color: #0c193b;
+}
+
+.mi-footer {
+    background-color: #0c193b;
+    padding: 20px 0;
+    text-align: center;
+    color: #fff3d1;
+    margin: 0; /* Asegura que no haya margen externo */
+    border: none; /* Por si acaso */
+}
+
+
+
+    .mi-footer p {
+        margin: 0;
+        font-size: 1rem;
+    }
+
+
+.izquierda img {
+    max-height: 100px; /* Controla el tamaño del logo */
+}
+
+.derecha nav a {
+    margin: 0 15px; /* Espaciado entre los enlaces */
+    text-decoration: none;
+    color: #fff3d1;
+    font-weight: bold;
+}
+
+    .derecha nav a:hover {
+        color: #808080; /* Cambia el color al pasar el cursor */
+    }
+
+/* Tira de imagen debajo del header */
+.image-strip {
+    background-image: url('/Imagenes/Recepcion.jpg'); /* Ruta de tu imagen */
+    background-size: cover; /* Asegura que la imagen cubra todo el ancho */
+    background-position: center; /* Centra la imagen */
+    height: 380px; /* Ajusta la altura de la tira */
+    width: auto; /* Asegura que la tira ocupe todo el ancho */
+    margin: 0; /* Elimina márgenes */
+    padding: 0; /* Elimina paddings */
+}
+
+.texto-overlay {
+    position: absolute;
+    top: 50%; /* Centrado vertical */
+    left: 20px; /* Alinea el texto al lado izquierdo */
+    transform: translateY(-90%); /* Centra el texto verticalmente */
+    color: white;
+    text-align: left; /* Alinea el texto a la izquierda */
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo semitransparente para que el texto sea legible */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+    .texto-overlay h1 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .texto-overlay p {
+        font-size: 1.2rem;
+    }
+
+/* Estilo de la habitación destacada */
+/* Cambiar a columna para que los bloques estén uno debajo del otro */
+.libro-flotante {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 3rem 2rem;
+    background-color: #f9f9f9;
+}
+
+.libro-flotante-contacto {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    padding: 3rem 2rem;
+    background-color: #f9f9f9;
+}
+
+/* Cada bloque de sección será fila interna */
+.seccion-habitacion {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Para la sección del medio con imagen a la derecha */
+.imagen-derecha {
+    flex-direction: row-reverse;
+}
+
+.imagen-flotante {
+    max-width: 500px;
+    height: auto;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+}
+
+    .imagen-flotante:hover {
+        transform: scale(1.03);
+    }
+
+.descripcion-habitacion {
+    max-width: 500px;
+}
+
+.descripcion-habitacion {
+    max-width: 500px;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+/* Formulario de creación de cuenta */
+.form-cuenta {
+    max-width: 500px; /* Evita que se extienda demasiado */
+    margin: 10px auto; /* Centra horizontalmente y da espacio superior */
+    padding: 50px;
+    background-color: #f8f9fa; /* Color de fondo claro */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+    .form-cuenta h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .form-cuenta .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-cuenta label {
+        font-weight: 500;
+    }
+
+    .form-cuenta input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+    }
+
+    .form-cuenta button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        border: none;
+        color: white;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+        .form-cuenta button:hover {
+            background-color: #0056b3;
+        }
+
+.fondo-reservar {
+    background-image: url('/Imagenes/Recepcion.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Opcional: para efecto parallax */
+    flex: 1; /* Ocupa todo el espacio disponible */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0; /* Espacio arriba y abajo */
+}
+
+.fondo-contacto {
+    background-image: url('/Imagenes/Fondo.png');
+    background-repeat: no-repeat;
+    background-position: right bottom; /* Ancla la imagen en la esquina inferior derecha */
+    background-size: 65%; /* Reduce el tamaño de la imagen de fondo */
+    background-attachment: local; /* Mantiene la imagen fija en su posición */
+
+    min-height: calc(100vh - 60px); /* Llena el espacio debajo del header */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+}
+
+.fondo-paquetes {
+    background-image: url('/Imagenes/Fondo.png');
+    background-repeat: no-repeat;
+    background-position: right bottom; /* Ancla la imagen en la esquina inferior derecha */
+    background-size: 70%; /* Reduce el tamaño de la imagen de fondo */
+    background-attachment: local; /* Mantiene la imagen fija en su posición */
+
+    min-height: calc(100vh - 60px); /* Llena el espacio debajo del header */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+}
+
+
+
+.fondo-cuenta {
+    background-image: url('/Imagenes/Exteriores.png'); /* Cambia a tu ruta */
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+}
+
+.paquete-card {
+    height: 100%;
+    transition: transform 0.3s;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    .paquete-card:hover {
+        transform: translateY(-10px);
+    }
+
+.btn-elegir {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    margin-top: 15px;
+    transition: all 0.3s;
+}
+
+    .btn-elegir:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }
+
+.precio-paquete {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+h2 {
+    color: #333;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+.caja-flotante-transparente {
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con opacidad */
+    padding: 40px; /* Espaciado interno más razonable */
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    max-width: 900px;
+    width: 90%;
+    min-height: 500px; /* Esto la hace más alta sin usar padding excesivo */
+    text-align: center;
+    margin: 60px auto 0 auto; /* Centra horizontalmente */
+}
+    .caja-flotante-transparente form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .caja-flotante-transparente .form-group {
+        text-align: left;
+    }
+
+    .caja-flotante-transparente label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .caja-flotante-transparente input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+.btn-reservar {
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+    .btn-reservar:hover {
+        background-color: #0056b3;
+    }
+
+

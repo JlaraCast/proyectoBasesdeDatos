@@ -1,0 +1,310 @@
+﻿@model AppWebHotelBeach.Models.Reservation
+
+@{
+    ViewData["Title"] = "Crear reservación";
+}
+@{
+    var returnUrl = ViewBag.ReturnUrl as string ?? "";
+}
+
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #f5f7fa;
+        font-family: 'Segoe UI', sans-serif;
+        color: #0c193b;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 2rem;
+        font-size: 2rem;
+    }
+
+    .form-card {
+        background: #fff;
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+    }
+
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+        .form-group label {
+            font-weight: 600;
+        }
+
+    .form-control {
+        border-radius: 6px;
+        box-shadow: none;
+    }
+
+    .btn-primary {
+        background-color: #2e7d32;
+        border-color: #2e7d32;
+        color: white;
+        display: block;
+        margin: 0 auto;
+        padding: 0.6rem 2rem;
+        font-size: 1rem;
+        border-radius: 6px;
+    }
+
+        .btn-primary:hover {
+            background-color: #1b5e20;
+            border-color: #1b5e20;
+        }
+
+    .alert-danger {
+        margin-top: 1rem;
+    }
+
+    .text-danger {
+        font-size: 0.9rem;
+    }
+
+    a {
+        color: #0c193b;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+        a:hover {
+            text-decoration: underline;
+        }
+</style>
+
+<h1>Crear reservación</h1>
+
+<div class="form-card">
+    
+    <div class="form-card">
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @TempData["Error"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @TempData["Success"]
+                
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="CustomerId">Cédula</label>
+            <div class="input-group">
+                <input asp-for="CustomerId" class="form-control" placeholder="202220222" id="cedulaInput" onblur="buscarCedula()" />
+            </div>
+            <span asp-validation-for="CustomerId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group position-relative">
+            <label>Paquete</label>
+            <input asp-for="PackageId" type="hidden" id="selectedPackageId" />
+            <div class="input-group">
+                <input id="packageDisplay" class="form-control" readonly
+                       style="cursor:pointer;" onclick="togglePackagesDropdown()"
+                       placeholder="Haga clic para seleccionar un paquete" />
+                <button class="btn btn-outline-secondary" type="button" onclick="loadPackages()" title="Recargar paquetes">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </div>
+            <div id="packagesDropdown" class="dropdown-menu p-0" style="display:none; width:100%; max-height:400px; overflow-y:auto;">
+                <div id="loadingMessage" class="text-center p-3">
+                    <i class="fas fa-spinner fa-spin"></i> Cargando paquetes...
+                </div>
+                <div id="packagesList" class="p-0"></div>
+            </div>
+            <span asp-validation-for="PackageId" class="text-danger"></span>
+        </div>
+
+        <!-- Resto de los campos del formulario -->
+        <div class="form-group">
+            <label asp-for="ReservationDate">Fecha de reservación</label>
+            <input asp-for="ReservationDate" type="date" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+            <span asp-validation-for="ReservationDate" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="NumberOfPeople">Cantidad de personas</label>
+            <input asp-for="NumberOfPeople" class="form-control" type="number" min="1" />
+            <span asp-validation-for="NumberOfPeople" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="NumberOfNights">Cantidad de noches</label>
+            <input asp-for="NumberOfNights" class="form-control" type="number" min="1" />
+            <span asp-validation-for="NumberOfNights" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="PaymentMethod">Método de pago</label>
+            <select asp-for="PaymentMethod" class="form-control">
+                <option value="">-- Seleccione un método --</option>
+                <option value="Efectivo">Efectivo</option>
+            </select>
+            <span asp-validation-for="PaymentMethod" class="text-danger"></span>
+        </div>
+
+        <div class="form-group text-center">
+            <input type="submit" value="Crear" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+                     let packagesLoaded = false;
+        let isLoading = false;
+
+        function togglePackagesDropdown() {
+            const dropdown = document.getElementById('packagesDropdown');
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+            } else {
+                dropdown.style.display = 'block';
+                if (!packagesLoaded && !isLoading) {
+                    loadPackages();
+                }
+            }
+        }
+
+        function loadPackages() {
+            const loadingMessage = document.getElementById('loadingMessage');
+            const packagesList = document.getElementById('packagesList');
+            const packageDisplay = document.getElementById('packageDisplay');
+
+            // Mostrar estado de carga
+            isLoading = true;
+            loadingMessage.style.display = 'block';
+            loadingMessage.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cargando paquetes...';
+            packagesList.innerHTML = '';
+            packageDisplay.setAttribute('disabled', 'disabled');
+
+            // Hacer la petición
+            fetch('@Url.Action("GetAvailablePackages", "Packages")')
+                .then(response => {
+                    if (!response.ok) {
+                        // Si la respuesta no es exitosa, leer el mensaje de error
+                        return response.json().then(errorData => {
+                            throw new Error(errorData.message || 'Error en la respuesta del servidor');
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success && data.packages && data.packages.length > 0) {
+                        // Construir la lista de paquetes
+                        packagesList.innerHTML = data.packages.map(pkg => `
+                            <a class="dropdown-item d-flex justify-content-between align-items-center" href="#"
+                               onclick="selectPackage(${pkg.packageId}, '${escapeHtml(pkg.name)}')">
+                                <div>
+                                    <strong>${escapeHtml(pkg.name)}</strong>
+                                    <div class="text-muted small">${escapeHtml(pkg.description)}</div>
+                                </div>
+                                <span class="badge bg-primary rounded-pill">
+                                    ${pkg.costPerPersonPerNight.toLocaleString('es-CR', {style:'currency', currency:'CRC'})}
+                                </span>
+                            </a>
+                        `).join('');
+
+                        packagesLoaded = true;
+                    } else {
+                        // Mostrar mensaje cuando no hay paquetes
+                        packagesList.innerHTML = `
+                            <div class="dropdown-item text-center text-muted py-3">
+                                <i class="fas fa-info-circle"></i> ${data.message || 'No hay paquetes disponibles'}
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al cargar paquetes:', error);
+
+                    // Mostrar mensaje de error específico
+                    packagesList.innerHTML = `
+                        <div class="dropdown-item text-center text-danger py-3">
+                            <i class="fas fa-exclamation-triangle"></i> ${escapeHtml(error.message)}
+                            <button class="btn btn-sm btn-outline-primary mt-2" onclick="retryLoadPackages()">
+                                <i class="fas fa-sync-alt"></i> Reintentar
+                            </button>
+                        </div>
+                    `;
+                })
+                .finally(() => {
+                    loadingMessage.style.display = 'none';
+                    isLoading = false;
+                    packageDisplay.removeAttribute('disabled');
+                });
+        }
+
+        function retryLoadPackages() {
+            const packagesList = document.getElementById('packagesList');
+            packagesList.innerHTML = '';
+            loadPackages();
+        }
+
+        function selectPackage(packageId, packageName) {
+            document.getElementById('selectedPackageId').value = packageId;
+            document.getElementById('packageDisplay').value = packageName;
+            document.getElementById('packagesDropdown').style.display = 'none';
+
+            // Opcional: Mostrar notificación de éxito
+            showAlert('Paquete seleccionado correctamente', 'success');
+        }
+
+        // Función para escapar HTML (seguridad)
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Función para mostrar notificaciones
+        function showAlert(message, type) {
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+            alert.style.top = '20px';
+            alert.style.right = '20px';
+            alert.style.zIndex = '9999';
+            alert.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+
+            document.body.appendChild(alert);
+
+            // Auto-ocultar después de 5 segundos
+            setTimeout(() => {
+                alert.classList.remove('show');
+                setTimeout(() => alert.remove(), 150);
+            }, 5000);
+        }
+    </script>
+}

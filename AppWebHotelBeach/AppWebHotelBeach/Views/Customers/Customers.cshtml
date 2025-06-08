@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Clientes";
+}
+
+<style>
+    .bg-custom {
+        background-color: #0c193b !important;
+    }
+
+    .btn-custom-outline {
+        border-color: #0c193b;
+        color: #0c193b;
+        transition: all 0.3s ease;
+    }
+
+        .btn-custom-outline:hover {
+            background-color: #0c193b;
+            color: white;
+        }
+
+    .rounded-xl {
+        border-radius: 1rem;
+    }
+
+    .card-shadow {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="card rounded-xl card-shadow border-0">
+        <div class="card-header bg-custom text-white rounded-top-xl">
+            <h3 class="mb-0 text-center">Gestión de Clientes</h3>
+        </div>
+        <div class="card-body p-5">
+            <p class="mb-4 text-center fs-5">Selecciona una acción para administrar los registros de clientes.</p>
+            <div class="d-grid gap-3">
+                <a asp-controller="Customers" asp-action="List" class="btn btn-custom-outline btn-lg rounded-pill">
+                    Ver Lista de Clientes
+                </a>
+                <a asp-controller="Customers" asp-action="Create" class="btn btn-custom-outline btn-lg rounded-pill">
+                    Crear Cliente
+                </a>
+                <a asp-controller="Customers" asp-action="SearchByID" class="btn btn-custom-outline btn-lg rounded-pill">
+                    Buscar Cliente
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</div>

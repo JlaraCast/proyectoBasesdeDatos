@@ -1,0 +1,43 @@
+﻿@model AppWebHotelBeach.Models.Reservation
+
+@{
+    ViewData["Title"] = "Eliminar Reservación";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Eliminar Reservación</h1>
+
+<h3>¿Estás seguro que deseas eliminar esta reservación?</h3>
+
+<div>
+    <h4>Detalles de la Reservación</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.ReservationId)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.ReservationId)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.CustomerId)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.CustomerId)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.PackageId)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.PackageId)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.ReservationDate)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.ReservationDate)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.NumberOfPeople)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.NumberOfPeople)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.NumberOfNights)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.NumberOfNights)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.PaymentMethod)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.PaymentMethod)</dd>
+    </dl>
+
+    <form asp-action="DeleteConfirmed" method="post">
+        <input type="hidden" name="id" value="@Model.ReservationId" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" />
+        <a asp-action="List" class="btn btn-secondary">Volver a la lista</a>
+    </form>
+</div>

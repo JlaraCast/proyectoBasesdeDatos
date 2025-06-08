@@ -1,0 +1,114 @@
+﻿@model AppWebHotelBeach.Models.Reservation
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #fff;
+        color: #0c193b;
+        padding: 0;
+    }
+
+    h1, h4 {
+        color: #0c193b;
+    }
+
+    hr {
+        border-color: #0c193b;
+        width: 100%;
+        margin: 0;
+    }
+
+    .details-container {
+        max-width: 700px;
+        border: 2px solid #0c193b;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(12, 25, 59, 0.2);
+        padding: 2rem 3rem;
+        margin: 0;
+        background: #f9faff;
+        text-align: justify;
+        color: #0c193b;
+    }
+
+    dl {
+        margin: 0;
+    }
+
+        dl dt {
+            font-weight: 700;
+            display: inline;
+        }
+
+        dl dd {
+            display: inline;
+            margin: 0;
+        }
+
+    .action-links {
+        max-width: 700px;
+        margin: 0 auto;
+        text-align: center;
+        font-size: 1.1rem;
+    }
+
+        .action-links a {
+            color: #0c193b;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+            .action-links a:hover {
+                color: #07112a;
+                text-decoration: underline;
+            }
+</style>
+
+<h1>Details</h1>
+
+<div class="details-container">
+    <h4>Reservation</h4>
+    <hr />
+    <dl>
+        <dt>@Html.DisplayNameFor(model => model.ReservationId):</dt>
+        <dd>@Html.DisplayFor(model => model.ReservationId)</dd>
+        <br />
+
+        <dt>@Html.DisplayNameFor(model => model.CustomerId):</dt>
+        <dd>@Html.DisplayFor(model => model.CustomerId)</dd>
+        <br />
+
+        <dt>@Html.DisplayNameFor(model => model.PackageId):</dt>
+        <dd>@Html.DisplayFor(model => model.PackageId)</dd>
+        <br />
+
+        <dt>@Html.DisplayNameFor(model => model.ReservationDate):</dt>
+        <dd>@Html.DisplayFor(model => model.ReservationDate)</dd>
+        <br />
+
+        <dt>@Html.DisplayNameFor(model => model.NumberOfPeople):</dt>
+        <dd>@Html.DisplayFor(model => model.NumberOfPeople)</dd>
+        <br />
+
+        <dt>@Html.DisplayNameFor(model => model.NumberOfNights):</dt>
+        <dd>@Html.DisplayFor(model => model.NumberOfNights)</dd>
+        <br />
+
+        <dt>@Html.DisplayNameFor(model => model.PaymentMethod):</dt>
+        <dd>@Html.DisplayFor(model => model.PaymentMethod)</dd>
+        <br />
+
+       
+    </dl>
+
+    <div class="action-links">
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ReservationId }) |
+        <a asp-action="List">Volver a la lista</a>
+    </div>
+</div>
