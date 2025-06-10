@@ -17,6 +17,7 @@ namespace APISeguridad.Model
         public DbSet<Pantalla> pantallas { get; set; }
 
         public DbSet<Bitacora> bitacoras { get; set; }
-
+        public DbSet<Role> roles { get; set; }
+        public DbSet<Sistema> sistemas { get; set; }
     }
 }
