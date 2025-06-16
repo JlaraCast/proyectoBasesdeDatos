@@ -55,7 +55,7 @@ namespace APISeguridad.Controllers
         [HttpDelete("Delete")]
         public string Delete(int pIdRole)
         {
-            string msg = "Delete rol...";
+            string msg = "Eliminando rol...";
             try
             {
                 var role = _context.roles.FirstOrDefault(r => r.idRol == pIdRole);

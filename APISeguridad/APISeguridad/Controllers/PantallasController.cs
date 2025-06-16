@@ -78,7 +78,7 @@ namespace APISeguridad.Controllers
         [HttpDelete("Delete")]
         public string Delete(int pIdPantalla)
         {
-            string msg = "Delete Pantalla...";
+            string msg = "Eliminando Pantalla...";
 
             try
             {
@@ -88,7 +88,7 @@ namespace APISeguridad.Controllers
                 //se verifica que no sea un valor nulo
                 if (pantalla == null)
                 {
-                    msg = "Pantalla not found.";
+                    msg = "Pantalla no encontrada.";
                 }
                 else
                 {

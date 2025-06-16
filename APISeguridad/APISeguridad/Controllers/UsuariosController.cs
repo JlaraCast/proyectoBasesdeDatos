@@ -79,7 +79,7 @@ namespace APISeguridad.Controllers
         [HttpDelete("Delete")]
         public string Delete(int pIdUsuario)
         {
-            string msg = "Delete usuario...";
+            string msg = "Eliminando usuario...";
 
             try
             {
@@ -89,7 +89,7 @@ namespace APISeguridad.Controllers
                 //se verifica que no sea un valor nulo
                 if (usuario == null)
                 {
-                    msg = "Usuario not found.";
+                    msg = "Usuario no encontrado.";
                 }
                 else
                 {

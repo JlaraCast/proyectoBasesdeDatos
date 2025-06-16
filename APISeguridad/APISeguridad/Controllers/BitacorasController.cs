@@ -21,7 +21,7 @@ namespace APISeguridad.Controllers
         public List<Bitacora> List()
         {
             // Variable local de tipo lista que almacenará las bitacoras recuperados de la base de datos.
-            List<Bitacora> temp = _context.bitacoras.ToList();
+            List<Bitacora> temp = _context.bitacora.ToList();
 
             // Se retorna la lista de bitacoras
             return temp;
@@ -32,13 +32,13 @@ namespace APISeguridad.Controllers
         public ActionResult<List<Bitacora>> SearchByUserId(int idUsuario)
         {
             //devuelve una lista de bitacoras 
-            var bitacoras = _context.bitacoras
+            var bitacoras = _context.bitacora
                 .Where(r => r.idUsuario == idUsuario)
                 .ToList();
 
             if (bitacoras == null || bitacoras.Count == 0)
             {
-                return NotFound($"No bitacoras found for user ID {idUsuario}.");
+                return NotFound($"No se encuentran bitacoras para el ID {idUsuario}.");
             }
 
             return Ok(bitacoras); // ASP.NET Core lo convierte a JSON automáticamente
@@ -49,13 +49,13 @@ namespace APISeguridad.Controllers
         public ActionResult<List<Bitacora>> SearchByDateAndAction(DateTime fecha, string accion)
         {
             // Filtra las bitacoras por fecha exacta y acción
-            var bitacoras = _context.bitacoras
+            var bitacoras = _context.bitacora
                 .Where(r => r.fecha.Date == fecha.Date && r.accion == accion)
                 .ToList();
 
             if (bitacoras == null || bitacoras.Count == 0)
             {
-                return NotFound($"No bitacoras found for date {fecha.ToShortDateString()} and action '{accion}'.");
+                return NotFound($"No se encuentran bitacoras para estos datos: {fecha.ToShortDateString()} and action '{accion}'.");
             }
 
             return Ok(bitacoras);

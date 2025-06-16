@@ -50,7 +50,7 @@ namespace APISeguridad.Controllers
         [HttpDelete("Delete")]
         public string Delete(int pIdSistema)
         {
-            string msg = "Delete sistema...";
+            string msg = "Eliminando sistema...";
             try
             {
                 var sistema = _context.sistemas.FirstOrDefault(x => x.idSistema == pIdSistema);
