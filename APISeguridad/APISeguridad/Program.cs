@@ -9,7 +9,7 @@ builder.Services.AddControllers();
 
 //Agregado para trabajar la BD de seguridad
 builder.Services.AddDbContext<DbContextSeguridad>(
-    options => options.UseSqlServer(
+    options => options.UseOracle(
         builder.Configuration.GetConnectionString("StringConexion")));
 
 

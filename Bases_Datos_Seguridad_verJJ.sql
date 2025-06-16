@@ -1,4 +1,3 @@
---revisar cambios de jj
 
 ---Tablas Principales 
 create table usuarios (
@@ -35,12 +34,14 @@ create table bitacora (
 idBitacora int ,
 idUsuario int,
 idSistema int,
+idPantalla int,
 fecha date,
 accion varchar(255),
 detalle varchar(255),
-primary key(idBitacora,idSistema),
+primary key(idBitacora,idSistema,idPantalla),
 foreign key (idSistema) references sistemas(idSistema),
-foreign key (idUsuario) references usuarios(idUsuario));
+foreign key (idUsuario) references usuarios(idUsuario),
+foreign key (idPantalla) references pantallas(idPantalla));
 
 ---Tablas Intermedias
 
