@@ -7,7 +7,7 @@ namespace APISeguridad.Model
     {
         public DbContextSeguridad(
             DbContextOptions<DbContextSeguridad> options) : base(options)
-        { 
+        {
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -60,7 +60,7 @@ namespace APISeguridad.Model
                 entity.Property(e => e.descripcion).HasColumnName("DESCRIPCION");
                 entity.Property(e => e.ruta).HasColumnName("RUTA");
 
-               
+
             });
 
             // BITACORA (tabla en DB: BITACORA)
@@ -75,7 +75,7 @@ namespace APISeguridad.Model
                 entity.Property(e => e.accion).HasColumnName("ACCION");
                 entity.Property(e => e.detalle).HasColumnName("DETALLE");
 
-              
+
             });
 
 
@@ -86,7 +86,7 @@ namespace APISeguridad.Model
 
         public DbSet<Pantalla> pantallas { get; set; }
 
-        public DbSet<Bitacora> bitacoras { get; set; }
+        public DbSet<Bitacora> bitacora { get; set; }
         public DbSet<Role> roles { get; set; }
         public DbSet<Sistema> sistemas { get; set; }
     }
