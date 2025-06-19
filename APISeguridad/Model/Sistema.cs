@@ -1,16 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace APISeguridad.Model
 {
-    public class Role
+    public class Sistema
     {
+        
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int idRol { get; set; }
-
-        [Required]
         public int idSistema { get; set; }
 
         [Required]
@@ -20,3 +16,4 @@ namespace APISeguridad.Model
         public string descripcion { get; set; }
     }
 }
+
